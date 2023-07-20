@@ -2,7 +2,8 @@ streamlit
 numpy
 pandas
 scikit-learn
-PIL
-time
-random
+Pillow
 xgboost
+
+
+#PIL は pillow とかく

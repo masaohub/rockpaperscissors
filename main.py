@@ -8,6 +8,7 @@ import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 import xgboost
 from xgboost import XGBClassifier
+from sklearn.tree import DecisionTreeClassifier
 
 #　タイトルとテキストを記入
 st.title('AI じゃん・けん・ぽん')
@@ -85,7 +86,8 @@ else:
         x = x.reshape(-1, 1)
         t = df_new['COM'].values[1:]
         t = t.astype(int)
-        model = RandomForestClassifier()
+        model = DecisionTreeClassifier()
+        # model = RandomForestClassifier() #決定木でもいい
         #model = XGBClassifier()
         model.fit(x, t)
         n = model.predict([[df_new.iloc[-1]['あなた']]])
