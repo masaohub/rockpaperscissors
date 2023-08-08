@@ -1,9 +1,4 @@
 streamlit
-numpy
-pandas
-scikit-learn
 Pillow
+pandas
 xgboost
-
-
-#PIL は pillow とかく
