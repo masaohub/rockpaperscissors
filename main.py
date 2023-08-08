@@ -13,8 +13,8 @@ from xgboost import XGBClassifier
 github_relative_path = 'DataFrame.csv'
 
 # GitHub上のファイルURLを構築
-github_raw_url = f'https://raw.githubusercontent.com/masaohub/rockpaperscissors/{github_relative_path}'
-
+#github_raw_url = f'https://raw.githubusercontent.com/masaohub/rockpaperscissors/{github_relative_path}'
+github_raw_url = f'https://github.com/masaohub/rockpaperscissors/{github_relative_path}'
 # データを読み込む
 @st.cache
 def load_data():
