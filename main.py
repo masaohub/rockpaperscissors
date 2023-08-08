@@ -14,8 +14,9 @@ github_relative_path = 'DataFrame.csv'
 
 # GitHub上のファイルURLを構築
 #github_raw_url = f'https://raw.githubusercontent.com/masaohub/rockpaperscissors/{github_relative_path}'
-github_raw_url = f'https://github.com/masaohub/rockpaperscissors/main/{github_relative_path}'
-\
+github_raw_url = f'https://github.com/masaohub/rockpaperscissors/blob/aabc9569dd2f2e41657d58caaab3bb83b5b6e160/main/{github_relative_path}'
+
+
 # データを読み込む
 @st.cache
 def load_data():
