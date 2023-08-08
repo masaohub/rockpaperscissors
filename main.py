@@ -19,7 +19,7 @@ github_raw_url = f'https://raw.githubusercontent.com/masaohub/rockpaperscissors/
 @st.cache
 def load_data():
     data = pd.read_csv(github_raw_url)
-    return data
+    return df
 
 # データを読み込む
 df = load_data()
