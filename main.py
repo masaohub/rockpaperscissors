@@ -10,7 +10,7 @@ from xgboost import XGBClassifier
 
 # データセットの読み込み
 # GitHubリポジトリ内のファイル相対パス
-github_relative_path = '/DataFrame.csv'
+github_relative_path = 'DataFrame.csv'
 
 # GitHub上のファイルURLを構築
 github_raw_url = f'https://raw.githubusercontent.com/masaohub/rockpaperscissors/main/{github_relative_path}'
