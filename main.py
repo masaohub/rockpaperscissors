@@ -19,13 +19,13 @@ def load_data():
     return data
 
 # データを読み込む
-df = load_data()
+data = load_data()
 
 
 # 目標値（目的変数）の指定
 target_column = 'target'  # 目標値の列名を適宜変更する必要があります
-y = df[target_column]
-x = df.drop(target_column, axis=1)  # 目標値を除いた特徴量をXとして使用
+y = data[target_column]
+x = data.drop(target_column, axis=1)  # 目標値を除いた特徴量をXとして使用
 
 # 予測モデルの構築
 model = XGBClassifier(booster="gbtree",             # ブースター種類（ツリーモデル：gbtree or dart, 線形モデル：gblinear)
