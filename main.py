@@ -9,8 +9,21 @@ import pandas as pd
 from xgboost import XGBClassifier
 
 # データセットの読み込み
-datas = '/DataFrame.csv'
-df = pd.read_csv(datas)
+# GitHubリポジトリ内のファイル相対パス
+github_relative_path = 'path/to/your/DataFrame.csv'
+
+# GitHub上のファイルURLを構築
+github_raw_url = f'https://raw.githubusercontent.com/masaohub/rockpaperscissors/main/{github_relative_path}'
+
+# データを読み込む
+@st.cache
+def load_data():
+    data = pd.read_csv(github_raw_url)
+    return data
+
+# データを読み込む
+df = load_data()
+
 
 # 目標値（目的変数）の指定
 target_column = 'target'  # 目標値の列名を適宜変更する必要があります
