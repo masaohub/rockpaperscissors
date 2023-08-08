@@ -9,7 +9,7 @@ import pandas as pd
 from xgboost import XGBClassifier
 
 # データセットの読み込み
-datas = 'C:\\Users\\masao\\Desktop\\Pythonフォルダ\\guchokipa_Select\\DataFrame.csv'
+datas = 'DataFrame.csv'
 df = pd.read_csv(datas)
 
 # 目標値（目的変数）の指定
