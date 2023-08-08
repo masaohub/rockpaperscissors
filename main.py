@@ -16,7 +16,7 @@ file_relative_path = 'DataFrame.csv'
 @st.cache
 def load_data():
     data = pd.read_csv(file_relative_path)
-    return df
+    return data
 
 # データを読み込む
 df = load_data()
