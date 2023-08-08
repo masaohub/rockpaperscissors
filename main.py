@@ -10,17 +10,12 @@ from xgboost import XGBClassifier
 
 # データセットの読み込み
 # GitHubリポジトリ内のファイル相対パス
-github_relative_path = 'DataFrame.csv'
-
-# GitHub上のファイルURLを構築
-#github_raw_url = f'https://raw.githubusercontent.com/masaohub/rockpaperscissors/{github_relative_path}'
-github_raw_url = f'https://github.com/masaohub/rockpaperscissors/blob/aabc9569dd2f2e41657d58caaab3bb83b5b6e160/main/{github_relative_path}'
-
+file_relative_path = 'DataFrame.csv'
 
 # データを読み込む
 @st.cache
 def load_data():
-    data = pd.read_csv(github_raw_url)
+    data = pd.read_csv(file_relative_path)
     return df
 
 # データを読み込む
