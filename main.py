@@ -14,7 +14,7 @@ from xgboost import XGBClassifier
 file_relative_path = 'DataFrame.csv'
 
 # データを読み込む
-@st.cache
+@st.cache_data
 def load_data():
     data = pd.read_csv(file_relative_path)
     return data
