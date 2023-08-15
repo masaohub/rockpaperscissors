@@ -7,14 +7,14 @@ import time
 import random
 import pandas as pd
 from xgboost import XGBClassifier
-
+import lightgbm as lgb
 
 # データセットの読み込み
 # GitHubリポジトリ内のファイル相対パス
 file_relative_path = 'DataFrame.csv'
 
 # データを読み込む
-@st.cache
+@st.cache_data
 def load_data():
     data = pd.read_csv(file_relative_path)
     return data
@@ -29,27 +29,36 @@ y = data[target_column]
 x = data.drop(target_column, axis=1)  # 目標値を除いた特徴量をXとして使用
 
 # 予測モデルの構築
-model = XGBClassifier(booster="gbtree",             # ブースター種類（ツリーモデル：gbtree or dart, 線形モデル：gblinear)
-                        learning_rate=1,              # 過学習防止を目的とした学習率
-                        min_split_loss=0,             # 決定木の葉ノード追加に伴う損失減少の下限値
-                        max_depth=6,                  # 決定木の深さの最大値
-                        min_child_weight=1,           # 決定木の葉に必要な重みの下限
-                        subsample=1,                  # 各決定木においてランダム抽出されるサンプル割合
-                        sampling_method="uniform",    # サンプリング方法
-                        colsample_bytree=1,           # 各決定木でランダムに設定される説明変数の割合
-                        colsample_bylevel=1,          # 決定木が深さ単位で分割される際に利用する説明変数の割合
-                        reg_lambda=1,                 # L2正則化のペナルティ項
-                        reg_alpha=0,                  # L1正則化のペナルティ項
-                        tree_method="auto",           # ツリー構造アルゴリズム
-                        process_type="default",       # 実行するブースティングプロセス
-                        grow_policy="depthwise",      # 新しい葉ノードを木に追加する際の制御ポリシー
-                        max_leaves=0,                 # 追加する葉ノードの最大数
-                        objective="reg:squarederror", # 学習プロセスで最小化を目指す損失関数
-                        num_round=9,                  # ブースティング回数(=作成する決定木の本数)
-                        )
-model.fit(x, y)
+#model = XGBClassifier(booster="gbtree",             # ブースター種類（ツリーモデル：gbtree or dart, 線形モデル：gblinear)
+#                        learning_rate=1,              # 過学習防止を目的とした学習率
+#                        min_split_loss=0,             # 決定木の葉ノード追加に伴う損失減少の下限値
+#                        max_depth=6,                  # 決定木の深さの最大値
+#                        min_child_weight=1,           # 決定木の葉に必要な重みの下限
+#                        subsample=1,                  # 各決定木においてランダム抽出されるサンプル割合
+#                        sampling_method="uniform",    # サンプリング方法
+#                        colsample_bytree=1,           # 各決定木でランダムに設定される説明変数の割合
+#                        colsample_bylevel=1,          # 決定木が深さ単位で分割される際に利用する説明変数の割合
+#                        reg_lambda=1,                 # L2正則化のペナルティ項
+#                        reg_alpha=0,                  # L1正則化のペナルティ項
+#                        tree_method="auto",           # ツリー構造アルゴリズム
+#                        process_type="default",       # 実行するブースティングプロセス
+#                        grow_policy="depthwise",      # 新しい葉ノードを木に追加する際の制御ポリシー
+#                        max_leaves=0,                 # 追加する葉ノードの最大数
+#                        objective="reg:squarederror", # 学習プロセスで最小化を目指す損失関数
+#                        num_round=9,                  # ブースティング回数(=作成する決定木の本数)
+#                        )
 
-# ダメだったモデル RandomForestRegressor / GradientBoostingRegressor
+# 予測モデルの構築（LightGBM）
+model = lgb.LGBMClassifier(
+    boosting_type="gbdt",
+    learning_rate=0.1,
+    max_depth=6,
+    num_leaves=31,
+    n_estimators=100,
+    objective="binary",
+    random_state=42
+)
+model.fit(x, y)
 
 
 #　タイトルとテキストを記入
@@ -135,21 +144,6 @@ if st.session_state.click_count < 4:
     st.session_state.n = random.randint(0, 2)
     print('random')
     print(st.session_state.n)
-#else:
-    # 学習用のデータとして手の履歴を取得
-    #df_new = st.session_state.hand_log
-    #print(df_new)
-    #if len(df_new) > 0:
-        #X_Value = pd.DataFrame([[st.session_state.X3, st.session_state.X2, st.session_state.X1]])
-        # 予測値のデータフレーム
-        #n = model.predict_proba(X_Value)
-        #print(X_Value)
-        #print(n)
-        # 最大要素のインデックスを取得
-        #n = np.argmax(n)
-        #print(n)
-        #print('model')
-
 
 # 手のボタン をクリックすると、イベント開始
 if clicked1 or clicked2 or clicked3:
@@ -259,7 +253,6 @@ if clicked1 or clicked2 or clicked3:
         # データフレームを作成
         X_Value = pd.DataFrame([[st.session_state.X3, st.session_state.X2, st.session_state.X1]], columns=['X3', 'X2', 'X1'])
         # 予測値のデータフレーム
-#        st.session_state.n = model.predict_proba(X_Value)
         st.session_state.n = model.predict(X_Value)
         print(X_Value)
         print(st.session_state.n)
@@ -276,4 +269,3 @@ with lose_col:
     st.write(f'負け {st.session_state.lose} 回')
 with eql_col:
     st.write(f'あいこ {st.session_state.eql} 回')
-
