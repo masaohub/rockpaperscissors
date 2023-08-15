@@ -8,6 +8,7 @@ import random
 import pandas as pd
 from xgboost import XGBClassifier
 
+
 # データセットの読み込み
 # GitHubリポジトリ内のファイル相対パス
 file_relative_path = 'DataFrame.csv'
