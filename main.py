@@ -55,7 +55,7 @@ model = lgb.LGBMClassifier(
     max_depth=6,
     num_leaves=31,
     n_estimators=100,
-    objective="binary",
+    objective="multiclass",
     random_state=42
 )
 model.fit(x, y)
